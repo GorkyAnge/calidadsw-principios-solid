@@ -219,9 +219,7 @@ En el código original, la clase `Fish` extendía de `Animal`, pero no podía im
 - `Fish` implementa solo `Soundable`, y ya no se ve forzado a implementar un comportamiento que no posee (`walk()`).
 - Se garantiza que todas las subclases son completamente sustituibles por sus interfaces respectivas, cumpliendo el LSP.
 
-## Capturas de ejecución
 
-![Ejecución del programa](Ejecucion%20lsp.png)
 
 ## Conclusión
 
