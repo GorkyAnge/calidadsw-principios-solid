@@ -223,7 +223,11 @@ En el código original, la clase `Fish` extendía de `Animal`, pero no podía im
 
 ## Conclusión
 
-Gracias a la separación de responsabilidades mediante interfaces, se logró cumplir con el Principio de Sustitución de Liskov. Esta solución evita errores en tiempo de ejecución y hace que el diseño sea más flexible y mantenible.
+El principio de sustitución de Liskov (LSP) establece que una clase derivada debe poder sustituir a su clase base sin alterar el correcto funcionamiento del programa. En el código original, se violaba este principio debido a que la clase Fish heredaba de Animal y sobrescribía el método walk() para lanzar una excepción, ya que los peces no caminan. Esta implementación generaba un comportamiento inesperado si un Fish era utilizado como un Animal, rompiendo así el principio LSP.
+
+Para corregir este problema, el código fue refactorizado mediante el uso de interfaces específicas como Walkable y Soundable, y posteriormente FlyingBird en el caso de aves. Esto permitió diferenciar correctamente a los animales según sus capacidades reales sin forzarlos a implementar comportamientos que no les corresponden. Así, solo las clases que realmente pueden caminar implementan la interfaz Walkable, y lo mismo ocurre con las que pueden volar.
+
+Con esta refactorización, todas las clases cumplen el principio LSP, ya que pueden ser utilizadas de forma intercambiable a través sus interfaces sin generar errores en tiempo de ejecución. Esto mejora la seguridad, mantenibilidad y legibilidad del código, y demuestra cómo los principios SOLID permiten diseñar software más robusto y extensible.
 
 # Principio SOLID:  Interface Segregation Principle (ISP)
 ## Problema
