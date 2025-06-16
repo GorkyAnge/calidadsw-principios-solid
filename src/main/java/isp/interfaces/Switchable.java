@@ -1,7 +1,6 @@
 package isp.interfaces;
 
-public interface Device {
+public interface Switchable {
     void turnOn();
     void turnOff();
-    void charge();
 }

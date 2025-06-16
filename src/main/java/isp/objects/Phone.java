@@ -1,8 +1,9 @@
 package isp.objects;
 
-import isp.interfaces.Device;
+import isp.interfaces.Rechargeable;
+import isp.interfaces.Switchable;
 
-public class Phone implements Device {
+public class Phone implements Rechargeable, Switchable {
     @Override
     public void turnOn() {
         System.out.println("Phone is turning on.");

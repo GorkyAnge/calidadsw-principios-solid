@@ -1,6 +1,7 @@
 package isp;
 
-import isp.interfaces.Device;
+import isp.interfaces.Rechargeable;
+import isp.interfaces.Switchable;
 import isp.objects.DisposableCamera;
 import isp.objects.Phone;
 
@@ -8,13 +9,12 @@ import isp.objects.Phone;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Device phone = new Phone();
-        Device camera = new DisposableCamera();
+        Switchable phone = new Phone();
+        Switchable camera = new DisposableCamera();
 
         phone.turnOn();
-        phone.charge();
+        ((Rechargeable) phone).charge();
 
         camera.turnOn();
-        camera.charge(); // Excepción: UnsupportedOperationException
     }
 }
