@@ -221,8 +221,7 @@ En el código original, la clase `Fish` extendía de `Animal`, pero no podía im
 
 ## Capturas de ejecución
 
-![Dog Execution](screenshots/dog-execution.png)
-![Fish Execution](screenshots/fish-execution.png)
+![Ejecución del programa](Ejecucion%20lsp.png)
 
 ## Conclusión
 
