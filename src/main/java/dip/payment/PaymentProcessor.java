@@ -1,13 +1,13 @@
 package dip.payment;
 
 public class PaymentProcessor {
-    private CreditCardPayment payment;
+    private final PaymentMethod paymentMethod;
 
-    public PaymentProcessor() {
-        this.payment = new CreditCardPayment(); // Dependencia directa
+    public PaymentProcessor(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public void makePayment(double amount) {
-        payment.processPayment(amount);
+        paymentMethod.processPayment(amount);
     }
 }
