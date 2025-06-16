@@ -6,6 +6,7 @@ Este proyecto demuestra cómo refactorizar una clase que viola el principio SRP.
 
 La clase `UserManager` validaba, guardaba y notificaba usuarios, teniendo múltiples razones para cambiar.
 ![img_1.png](img_1.png)
+
 En el código original, la clase UserManager viola el Principio de Responsabilidad Única (SRP) al asumir múltiples funciones: valida datos, guarda información y envía notificaciones. Esto genera varias razones para modificar la clase, lo que complica su mantenimiento, pruebas y reutilización.
 Al mezclar lógica de negocio, persistencia y notificaciones, se vuelve difícil adaptar el sistema a cambios futuros sin afectar otras partes. Para cumplir con SRP, se propone dividir estas responsabilidades en clases separadas: UserValidator, UserRepository, NotificationService y una clase UserManager que solo coordine el flujo.
 
@@ -63,6 +64,20 @@ Clase principal que **coordina** las demás clases:
 Cada clase tiene una única responsabilidad. El sistema es más mantenible y fácil de testear.
 
 ![img_2.png](img_2.png)
+
+## 🧠 Reflexión Final
+
+La refactorización realizada demuestra de forma práctica la **aplicación del Principio de Responsabilidad Única (SRP)**, uno de los pilares de los principios SOLID. En el código original, una sola clase gestionaba validaciones, persistencia y notificaciones, lo que implicaba **acoplamiento elevado** y **baja cohesión**. Esto dificultaba la extensión del sistema, introducía riesgos al modificar funcionalidades aisladas y hacía más compleja la escritura de pruebas unitarias.
+
+Al aplicar SRP, **cada clase pasó a tener una única razón para cambiar**, es decir, una sola responsabilidad bien definida:
+
+- Si cambian las reglas de validación, solo se modifica `UserValidator`.
+- Si se integra una base de datos real, solo se actualiza `UserRepository`.
+- Si se cambia el canal de notificación (por ejemplo, de email a SMS), solo afecta a `NotificationService`.
+
+Además, la clase `UserManager` quedó **desacoplada de los detalles específicos**, limitándose a orquestar las operaciones. Esto facilita **la escalabilidad, la legibilidad y el mantenimiento del código**. La separación de responsabilidades no solo mejora la estructura del sistema, sino que también **reduce la complejidad cognitiva** para los desarrolladores que deban trabajar con él en el futuro.
+
+En resumen, aplicar el SRP no solo resolvió el problema del exceso de responsabilidades en una sola clase, sino que sentó las bases para un diseño **más limpio, modular y sostenible a largo plazo**.
 
 ---
 
