@@ -89,15 +89,38 @@ El proyecto inicial presentaba una violación clara del Principio Abierto/Cerrad
 
 El problema fundamental de este diseño era que cada vez que se necesitaba añadir un nuevo tipo de notificación (por ejemplo, Fax o notificaciones por una nueva aplicación), se hacía indispensable modificar directamente el código fuente de `NotificationService`. Esta práctica generaba un código rígido y frágil, altamente propenso a errores, especialmente a medida que la aplicación crecía y se añadían más funcionalidades, incrementando la dificultad de mantenimiento.
 
-## Aplicación del Principio Abierto/Cerrado (OCP)
+## Aplicando el Principio Abierto/Cerrado (OCP)
 
-Para solucionar esta problemática y adherirse al OCP, se llevó a cabo una refactorización estratégica:
+Para abordar estos problemas y cumplir con el OCP, se implementó una refactorización estructurada en los siguientes pasos:
 
-1.  **Definición de una Interfaz Común (`Notification`)**: Se creó una interfaz `Notification` que declara un método `send(String message)`. Esta interfaz actúa como un contrato que todas las implementaciones de notificación deben seguir, estableciendo una abstracción para el proceso de envío.
+1.  **Introducción de una Interfaz `Notification`**:
+    * Se creó una interfaz llamada `Notification` que define un método `send()`.
+    * Esta interfaz establece un contrato común que todas las futuras implementaciones de notificación deben cumplir, asegurando uniformidad.
 
-2.  **Creación de Clases de Notificación Específicas**: Se implementaron clases concretas para cada tipo de notificación existente: `EmailNotification`, `SMSNotification` y `PushNotification`. Cada una de estas clases implementa la interfaz `Notification` y contiene la lógica específica para enviar su respectivo tipo de mensaje. Esto encapsula la funcionalidad de envío dentro de sus propias clases, haciendo que cada una sea responsable de su tipo de notificación.
+2.  **Creación de Clases Concretas Separadas**:
+    * Se desarrollaron clases concretas como `EmailNotification`, `SMSNotification` y `PushNotification`.
+    * Cada una de estas clases implementa la interfaz `Notification` y encapsula la lógica específica para el envío de su respectivo tipo de notificación.
 
-3.  **Refactorización de `NotificationService`**: La clase `NotificationService` fue modificada para depender de la interfaz `Notification` en lugar de las implementaciones concretas. Ahora, su método `sendNotification` acepta un objeto de tipo `Notification` y delega la responsabilidad de envío a este objeto, utilizando polimorfismo.
+3.  **Refactorización del `NotificationService`**:
+    * La clase `NotificationService` fue modificada para depender de la **abstracción** (la interfaz `Notification`) en lugar de depender directamente de las implementaciones concretas de cada tipo de notificación.
+
+---
+
+## Beneficios de la Aplicación del OCP
+
+La aplicación del OCP en el `NotificationService` trajo consigo mejoras sustanciales y resolvió varios problemas críticos:
+
+* ### Abierto para Extensión, Cerrado para Modificación
+    * La clase `NotificationService` ahora está **"cerrada para modificación"**. Esto significa que su código fuente no necesita ser alterado cada vez que se añade un nuevo tipo de notificación.
+    * En cambio, es **"abierta para extensión"**. La funcionalidad puede ser extendida fácilmente creando una nueva clase que simplemente implemente la interfaz `Notification`, sin necesidad de tocar el código existente del `NotificationService`.
+
+* ### Reducción de Errores y Mayor Estabilidad
+    * Al eliminar la necesidad de modificar el código existente, se **reduce drásticamente la probabilidad de introducir nuevos errores** o regresiones en funcionalidades ya probadas.
+    * Los cambios se aíslan en las nuevas implementaciones de `Notification`, lo que facilita la depuración y mejora significativamente la estabilidad general del sistema.
+
+* ### Flexibilidad y Mantenibilidad Mejoradas
+    * El sistema se vuelve considerablemente más **flexible y fácil de mantener**.
+    * La adición de futuras notificaciones es un proceso sencillo y predecible, lo que agiliza el desarrollo y reduce la complejidad general del código a largo plazo.
 
 ```java
 // Interfaz para métodos de notificación
