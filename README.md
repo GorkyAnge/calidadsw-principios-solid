@@ -194,3 +194,37 @@ processor3.makePayment(300.0);
 ```
 
 Con esta refactorización, el sistema de pagos es flexible y preparado para el crecimiento futuro, alineándose con los principios SOLID.
+
+
+# Aplicación del Principio de Sustitución de Liskov (LSP)
+
+## Descripción
+
+Este proyecto demuestra cómo aplicar correctamente el Principio de Sustitución de Liskov (LSP) en una jerarquía de clases para representar animales con diferentes capacidades.
+
+## Problema Inicial
+
+En el código original, la clase `Fish` extendía de `Animal`, pero no podía implementar correctamente el método `walk()`, lanzando una excepción (`UnsupportedOperationException`). Esto rompe el principio LSP, ya que una instancia de `Fish` no puede sustituir a `Animal` sin afectar el comportamiento del sistema.
+
+## Solución
+
+- Se refactorizó la jerarquía de clases usando **interfaces** para representar capacidades específicas:
+  - `Soundable` para animales que hacen sonidos.
+  - `Walkable` para animales que pueden caminar.
+- Se implementaron solo las interfaces correspondientes en cada clase concreta.
+
+## Resultados
+
+- `Dog` implementa ambas interfaces y funciona correctamente.
+- `Fish` implementa solo `Soundable`, y ya no se ve forzado a implementar un comportamiento que no posee (`walk()`).
+- Se garantiza que todas las subclases son completamente sustituibles por sus interfaces respectivas, cumpliendo el LSP.
+
+## Capturas de ejecución
+
+![Dog Execution](screenshots/dog-execution.png)
+![Fish Execution](screenshots/fish-execution.png)
+
+## Conclusión
+
+Gracias a la separación de responsabilidades mediante interfaces, se logró cumplir con el Principio de Sustitución de Liskov. Esta solución evita errores en tiempo de ejecución y hace que el diseño sea más flexible y mantenible.
+
