@@ -1,38 +1,52 @@
 package lsp;
 
-class Animal {
-    public void makeSound() {
-        System.out.println("Animal makes a sound.");
-    }
-
-    public void walk() {
-        System.out.println("Animal is walking.");
-    }
+// Soundable.java
+public interface Soundable {
+    void makeSound();
 }
 
-class Dog extends Animal {
+// Walkable.java
+public interface Walkable {
+    void walk();
+}
+
+// Dog.java
+public class Dog implements Soundable, Walkable {
     @Override
     public void makeSound() {
         System.out.println("Dog barks.");
     }
-}
 
-class Fish extends Animal {
     @Override
     public void walk() {
-        throw new UnsupportedOperationException("Fish can't walk.");
+        System.out.println("Dog is walking.");
     }
 }
 
+// Fish.java
+public class Fish implements Soundable {
+    @Override
+    public void makeSound() {
+        System.out.println("Fish makes bubbly sounds.");
+    }
+}
+
+// Main.java
 public class Main {
     public static void main(String[] args) {
-        Animal dog = new Dog();
-        Animal fish = new Fish();
+        Soundable dog = new Dog();
+        Soundable fish = new Fish();
 
+        System.out.println("Testing Dog:");
         dog.makeSound();
-        dog.walk();
+        if (dog instanceof Walkable) {
+            ((Walkable) dog).walk();
+        }
 
+        System.out.println("\nTesting Fish:");
         fish.makeSound();
-        fish.walk(); // Excepción: UnsupportedOperationException
+        if (fish instanceof Walkable) {
+            ((Walkable) fish).walk(); // Esto no se ejecuta
+        }
     }
 }
