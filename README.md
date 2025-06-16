@@ -70,3 +70,44 @@ public class Main {
         // service.sendNotification(new FaxNotification(), "Hello via Fax!");
     }
 }
+```
+
+
+# Reflexión sobre el Principio de Inversión de Dependencias (DIP)
+
+## Contexto del Problema
+
+En la implementación original del módulo de pagos, la clase `PaymentProcessor` dependía directamente de la clase concreta `CreditCardPayment`. Esto generaba un acoplamiento fuerte, dificultando la extensión del sistema para soportar nuevos métodos de pago como PayPal o Crypto, ya que cualquier cambio requería modificar la lógica interna de `PaymentProcessor`. Esta situación violaba el Principio de Inversión de Dependencias (DIP) y el Principio Abierto/Cerrado (OCP).
+
+## Aplicación del DIP
+
+Para resolver este problema, se refactorizó el código de la siguiente manera:
+
+- Se creó la interfaz `PaymentMethod`, que define el contrato para cualquier método de pago.
+- Se implementaron las clases concretas `CreditCardPayment`, `PayPalPayment` y `CryptoPayment`, cada una siguiendo la interfaz `PaymentMethod`.
+- `PaymentProcessor` ahora depende de la abstracción `PaymentMethod` y recibe la implementación concreta mediante inyección de dependencias (por el constructor).
+
+## Beneficios Obtenidos
+
+- **Desacoplamiento:** Ahora `PaymentProcessor` no necesita conocer los detalles de cada método de pago, solo interactúa con la interfaz.
+- **Extensibilidad:** Es posible agregar nuevos métodos de pago sin modificar el código existente de `PaymentProcessor`, cumpliendo con el OCP.
+- **Mantenibilidad:** El código es más limpio, modular y fácil de mantener o probar.
+
+## Ejemplo de Uso
+
+```java
+PaymentMethod creditCard = new CreditCardPayment();
+PaymentMethod paypal = new PayPalPayment();
+PaymentMethod crypto = new CryptoPayment();
+
+PaymentProcessor processor1 = new PaymentProcessor(creditCard);
+processor1.makePayment(150.0);
+
+PaymentProcessor processor2 = new PaymentProcessor(paypal);
+processor2.makePayment(200.0);
+
+PaymentProcessor processor3 = new PaymentProcessor(crypto);
+processor3.makePayment(300.0);
+```
+
+Con esta refactorización, el sistema de pagos es flexible y preparado para el crecimiento futuro, alineándose con los principios SOLID.
