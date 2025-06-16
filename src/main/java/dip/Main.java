@@ -1,17 +1,24 @@
 package dip;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import dip.payment.CreditCardPayment;
+import dip.payment.CryptoPayment;
+import dip.payment.PayPalPayment;
+import dip.payment.PaymentProcessor;
+import dip.payment.PaymentMethod;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        PaymentMethod creditCard = new CreditCardPayment();
+        PaymentMethod paypal = new PayPalPayment();
+        PaymentMethod crypto = new CryptoPayment();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        PaymentProcessor processor1 = new PaymentProcessor(creditCard);
+        processor1.makePayment(150.0);
+
+        PaymentProcessor processor2 = new PaymentProcessor(paypal);
+        processor2.makePayment(200.0);
+
+        PaymentProcessor processor3 = new PaymentProcessor(crypto);
+        processor3.makePayment(300.0);
     }
 }
